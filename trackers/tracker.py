@@ -5,6 +5,9 @@ import cv2
 import os
 import numpy as np
 import pandas as pd
+import sys
+sys.path.append('../')
+from utils.bbox_utils import get_center_of_bbox, get_bbox_width
 
 class Tracker:
     def __init__(self, model_path):
@@ -103,3 +106,81 @@ class Tracker:
                 pickle.dump(tracks, f)
 
         return tracks
+
+    def draw_ellipse(self, frame, bbox, color, track_id=None):
+        """
+        Draws an ellipse on the given frame.
+
+        Args:
+            frame (numpy array): Frame to draw the ellipse on.
+            bbox (tuple): Bounding box coordinates in the format (x1, y1, x2, y2).
+            color (tuple): Color of the ellipse in the format (B, G, R).
+            track_id (int, optional): ID of the track to draw. Default is None.
+
+        Returns:
+            numpy array: Frame with the ellipse drawn on it.
+        """
+        x_center, _ = get_center_of_bbox(bbox)
+        width = get_bbox_width(bbox)
+        y2 = int(bbox[3])
+        cv2.ellipse(
+            img = frame,
+            center = (x_center, y2),
+            axes = (int(width) , int(width*0.35)),
+            angle = 0.0,
+            startAngle = -45,
+            endAngle = 235,
+            color = color,
+            thickness = 2,
+            lineType = cv2.LINE_4
+        )
+
+        rectangle_width = 40
+        rectangle_height=20
+        x1_rect = x_center - rectangle_width//2
+        x2_rect = x_center + rectangle_width//2
+        y1_rect = (y2- rectangle_height//2) +15
+        y2_rect = (y2+ rectangle_height//2) +15
+
+        if track_id is not None:
+            cv2.rectangle(
+                frame,
+                (int(x1_rect), int(y1_rect)),
+                (int(x2_rect), int(y2_rect)),
+                color,
+                cv2.FILLED
+            )
+
+            x1_text = x1_rect+12
+            if track_id > 99:
+                x1_text -=10
+
+            cv2.putText(
+                frame,
+                f"{track_id}",
+                (int(x1_text),int(y1_rect+15)),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.6,
+                (0,0,0),
+                2
+            )
+        return frame
+
+
+
+    
+    def draw_annotations(self,video_frames, tracks,team_ball_contro):
+        """
+        Draws annotations on the given video frames.
+
+        Args:
+            video_frames (list): List of frames (numpy arrays) to draw annotations on.
+            tracks (dict): Dictionary containing tracks for players, referees, and ball.
+            team_ball_contro (str): The team that has control of the ball.
+
+        Returns:
+            list: List of frames with annotations drawn on them.
+        """
+        
+
+        pass
