@@ -45,7 +45,7 @@ class TeamAssigner:
             tuple: Average color of the player.
         """
         # Extract player from frame
-        player = frame[bbox[1]:bbox[3], bbox[0]:bbox[2]]
+        player = frame[int(bbox[1]):int(bbox[3]), int(bbox[0]):int(bbox[2])]
         
         # Get The Top half of the player
         top_half_player = player[:int(player.shape[0]/2),:]
