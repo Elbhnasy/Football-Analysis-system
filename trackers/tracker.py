@@ -188,8 +188,48 @@ class Tracker:
         ], np.int32)
         cv2.drawContours([frame], [triangle_points], 0, color, cv2.FILLED)
         cv2.drawContours([frame], [triangle_points], 0, (0,0,0), 2)
-
+        
         return frame
 
     
-    
+    def draw_annotations(self,video_frames, tracks,team_ball_contro):
+        """
+        Draws annotations on the given video frames.
+
+        Args:
+            video_frames (list): List of frames (numpy arrays) to draw annotations on.
+            tracks (dict): Dictionary containing tracks for players, referees, and ball.
+            team_ball_contro (str): The team that has control of the ball.
+
+        Returns:
+            list: List of frames with annotations drawn on them.
+        """
+        output_video_frames = []
+        for frame_num, frame in enumerate(video_frames):
+            frame = frame.copy()
+            player_dict = tracks["players"][frame_num]
+            referee_dict = tracks["referees"][frame_num]
+            ball_dict = tracks["ball"][frame_num]
+
+            # Draw player tracks
+            for track_id, player in player_dict.items():
+                color = player.get("team_color",(0,0,255))
+                frame = self.draw_ellipse(frame, player["bbox"],color, track_id)
+
+                if player.get('has_ball',False):
+                    frame = self.draw_traingle(frame, player["bbox"],(0,0,255))
+
+            # Draw referee tracks
+            for _, referee in referee_dict.items():
+                frame = self.draw_ellipse(frame, referee["bbox"],(0,255,255))          
+
+            # Draw ball tracks
+            for track_id, ball in ball_dict.items():
+                frame = self.draw_traingle(frame, ball["bbox"],(0,255,0))
+
+            # Draw team ball control
+            frame = self.draw_team_ball_control(frame, frame_num, team_ball_contro)
+
+            output_video_frames.append(frame)
+
+        return output_video_frames
