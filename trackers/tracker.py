@@ -191,6 +191,21 @@ class Tracker:
         
         return frame
 
+    def draw_team_ball_control(self, frame, frame_num, team_ball_contro):
+        """
+        Draws the team that has control of the ball on the given frame.
+
+        Args:
+            frame (numpy array): Frame to draw the team ball control on.
+            frame_num (int): Frame number.
+            team_ball_contro (str): The team that has control of the ball.
+
+        Returns:
+            numpy array: Frame with the team ball control drawn on it.
+        """
+        pass
+
+
     
     def draw_annotations(self,video_frames, tracks,team_ball_contro):
         """
