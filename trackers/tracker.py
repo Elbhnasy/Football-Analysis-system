@@ -166,21 +166,30 @@ class Tracker:
             )
         return frame
 
-
-
-    
-    def draw_annotations(self,video_frames, tracks,team_ball_contro):
+    def draw_traingle(self, frame, bbox, color):
         """
-        Draws annotations on the given video frames.
+        Draws a triangle on the given frame.
 
         Args:
-            video_frames (list): List of frames (numpy arrays) to draw annotations on.
-            tracks (dict): Dictionary containing tracks for players, referees, and ball.
-            team_ball_contro (str): The team that has control of the ball.
+            frame (numpy array): Frame to draw the triangle on.
+            bbox (tuple): Bounding box coordinates in the format (x1, y1, x2, y2).
+            color (tuple): Color of the triangle in the format (B, G, R).
 
         Returns:
-            list: List of frames with annotations drawn on them.
+            numpy array: Frame with the triangle drawn on it.
         """
-        
+        y = int(bbox[1])
+        x, _ = get_center_of_bbox(bbox)
 
-        pass
+        triangle_points = np.array([
+            [x, y],
+            [x-10, y-20],
+            [x+10, y-20]
+        ], np.int32)
+        cv2.drawContours([frame], [triangle_points], 0, color, cv2.FILLED)
+        cv2.drawContours([frame], [triangle_points], 0, (0,0,0), 2)
+
+        return frame
+
+    
+    
