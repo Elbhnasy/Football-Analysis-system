@@ -22,6 +22,8 @@ def read_video(video_path):
     cap.release()
     return frames
 
+
+
 def save_video(output_video_frames, output_video_path, fps=24, codec='XVID'):
     """
     Saves a list of frames as a video to the specified path.
@@ -38,12 +40,16 @@ def save_video(output_video_frames, output_video_path, fps=24, codec='XVID'):
     if not output_video_frames:
         raise ValueError("The list of output video frames is empty.")
 
-    frame_height, frame_width = output_video_frames[0].shape[:2]
-    fourcc = cv2.VideoWriter_fourcc(*codec)
-    out = cv2.VideoWriter(output_video_path, fourcc, fps, 
-                                (frame_width, frame_height))
+    # Ensure all frames are valid
+    valid_frames = [frame for frame in output_video_frames if frame is not None]
+    if not valid_frames:
+        raise ValueError("The list of output video frames contains no valid frames.")
 
-    for frame in output_video_frames:
+    frame_height, frame_width = valid_frames[0].shape[:2]
+    fourcc = cv2.VideoWriter_fourcc(*codec)
+    out = cv2.VideoWriter(output_video_path, fourcc, fps, (frame_width, frame_height))
+
+    for frame in valid_frames:
         out.write(frame)
 
     out.release()
