@@ -1,4 +1,4 @@
-def get_center_of_bbox(bbox: Tuple[int, int, int, int]) -> Tuple[int, int]:
+def get_center_of_bbox(bbox):
     """
     Calculate the center of a bounding box.
 
@@ -24,7 +24,7 @@ def get_center_of_bbox(bbox: Tuple[int, int, int, int]) -> Tuple[int, int]:
     
     return center_x, center_y
 
-def get_bbox_width(bbox: Tuple[int, int, int, int]) -> int:
+def get_bbox_width(bbox) :
     """
     Calculate the width of a bounding box.
 
