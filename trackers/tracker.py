@@ -231,26 +231,41 @@ class Tracker:
         return frame
 
     def draw_team_ball_control(self,frame,frame_num,team_ball_control): 
+        """
+        Draws the team that has ball control on the given frame.
+        Args: 
+            frame (numpy array): Frame to draw the team ball control on.
+            frame_num (int): Frame number.
+            team_ball_control (int): The team that has control of the ball.
+        Returns:
+            numpy array: Frame with the team ball control drawn on it.
+        """
     
-        # Draw a semi-transparent rectaggle 
+        # Draw the team ball control on the frame 
         overlay = frame.copy()
+        # Draw a white rectangle to display the team ball control
         cv2.rectangle(overlay, (1350, 850), (1900,970), (255,255,255), -1 )
+        
+        # Add the overlay to the frame
         alpha = 0.4
         cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0, frame)
-
+        
+        # Get the team ball control till the current frame
         team_ball_control_till_frame = team_ball_control[:frame_num+1]
-        # Get the number of time each team had ball control
+        
+        # Calculate the percentage of ball control for each team
         team_1_num_frames = team_ball_control_till_frame[team_ball_control_till_frame==1].shape[0]
         team_2_num_frames = team_ball_control_till_frame[team_ball_control_till_frame==2].shape[0]
+
         team_1 = team_1_num_frames/(team_1_num_frames+team_2_num_frames)
         team_2 = team_2_num_frames/(team_1_num_frames+team_2_num_frames)
-
-        cv2.putText(frame, f"Team 1 Ball Control: {team_1*100:.2f}%",(1400,900), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 3)
-        cv2.putText(frame, f"Team 2 Ball Control: {team_2*100:.2f}%",(1400,950), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 3)
+        # Display the team ball control on the frame
+        cv2.putText(frame, f"Team 1 Ball Control: {team_1*100:.2f}%",(1400,900), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 3)
+        cv2.putText(frame, f"Team 2 Ball Control: {team_2*100:.2f}%",(1400,950), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 3)
 
         return frame
-
-
 
 
     def draw_annotations(self, video_frames, tracks, team_ball_contro):
