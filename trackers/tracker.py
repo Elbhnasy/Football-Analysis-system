@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import sys
 sys.path.append('../')
-from utils.bbox_utils import get_center_of_bbox, get_bbox_width
+from utils.bbox_utils import get_center_of_bbox, get_bbox_width, get_foot_position
 
 class Tracker:
     def __init__(self, model_path):
@@ -20,6 +20,27 @@ class Tracker:
         self.model = YOLO(model_path)
         self.tracker = sv.ByteTrack()
 
+    def add_posstion_to_tracks(self, tracks):
+        """
+        Adds the position of the tracks to the track.
+
+        Args:
+            tracks (dict): Dictionary containing tracks for players, referees, and ball.
+
+        Returns:
+            dict: Dictionary containing tracks for players, referees, and ball with position added.
+        """
+        for object, object_tracks in tracks.items():
+            for frame_num, track in enumerate(object_tracks):
+                for track_id, track_info in track.items():
+                    bbox = track_info['bbox']
+                    if object == 'ball':
+                        position= get_center_of_bbox(bbox)
+                    else:
+                        position = get_foot_position(bbox)
+                    tracks[object][frame_num][track_id]['position'] = position
+
+    
     def interpolate_ball_positions(self,ball_positions):
         """
         Interpolates the ball positions to fill in missing values.
@@ -244,7 +265,7 @@ class Tracker:
         # Draw the team ball control on the frame 
         overlay = frame.copy()
         # Draw a white rectangle to display the team ball control
-        cv2.rectangle(overlay, (1350, 850), (1900,970), (255,255,255), -1 )
+        cv2.rectangle(overlay, (1380, 850), (1900,970), (255,255,255), -1 )
         
         # Add the overlay to the frame
         alpha = 0.4
@@ -260,9 +281,9 @@ class Tracker:
         team_1 = team_1_num_frames/(team_1_num_frames+team_2_num_frames)
         team_2 = team_2_num_frames/(team_1_num_frames+team_2_num_frames)
         # Display the team ball control on the frame
-        cv2.putText(frame, f"Team 1 Ball Control: {team_1*100:.2f}%",(1400,900), 
+        cv2.putText(frame, f"Team 1 Possession : {team_1*100:.2f}%",(1400,900), 
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 3)
-        cv2.putText(frame, f"Team 2 Ball Control: {team_2*100:.2f}%",(1400,950), 
+        cv2.putText(frame, f"Team 2 Possession: {team_2*100:.2f}%",(1400,950), 
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 3)
 
         return frame
