@@ -3,6 +3,7 @@ import numpy as np
 from utils.videos_utils import read_video, save_video
 from team_assigner.team_assigner import TeamAssigner
 from trackers.tracker import Tracker
+from view_transformer.view_transformer import ViewTransformer
 from player_ball_assigner.player_ball_assigner import PlayerBallAssigner  
 from camera_movement_estimator.camera_movement_estimator import CameraMovementEstimator
 
@@ -35,9 +36,9 @@ def main():
     # Add Adjust Position to Track
     camera_movement_estimator.add_adjust_positions_to_tracks(tracks, camera_movement_per_frame)
     
-    # # View Trasnformer
-    # view_transformer = ViewTransformer()
-    # view_transformer.add_transformed_position_to_tracks(tracks)
+    # View Trasnformer
+    view_transformer = ViewTransformer()
+    view_transformer.add_transformed_position_to_tracks(tracks)
 
     # Interpolate Ball Positions
     tracks["ball"] = tracker.interpolate_ball_positions(tracks["ball"])
