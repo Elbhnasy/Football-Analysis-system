@@ -47,22 +47,21 @@ def get_bbox_width(bbox) :
     
     return x2 - x1
 
-def measure_distance(p1, p2):
+
+def measure_distance(p1,p2):
     """
     Calculate the Euclidean distance between two points.
 
     Parameters:
-    p1 (Tuple[int, int]): A tuple representing the first point in the format (x, y).
-    p2 (Tuple[int, int]): A tuple representing the second point in the format (x, y).
+    p1 (Tuple[float, float]): The first point.
+    p2 (Tuple[float, float]): The second point.
 
     Returns:
     float: The Euclidean distance between the two points.
     """
-    x1, y1 = p1
-    x2, y2 = p2
-    
-    return ((x2 - x1)**2 + (y2 - y1)**2)**0.5
+    return ((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)**0.5
 
+    
 def measure_xy_distance(p1, p2):
     """
     Calculate the Euclidean distance between two points in the x-y plane.
