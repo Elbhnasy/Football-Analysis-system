@@ -144,7 +144,7 @@ class FootballAnalysisSystem:
 
 if __name__ == "__main__":
     input_video_path = "/home/fox/Desktop/Football-Analysis-system/videos/input_videos/08fd33_4.mp4"
-    output_video_path = "/home/fox/Desktop/Football-Analysis-system/videos/output_videos/output.avi"
+    output_video_path = "/home/fox/Desktop/Football-Analysis-system/videos/output_videos/output0.avi"
     model_path = "/home/fox/Desktop/Football-Analysis-system/models/v5.pt"
     track_stub_path = "/home/fox/Desktop/Football-Analysis-system/stubs/track_stub.pkl"
     camera_stub_path = "/home/fox/Desktop/Football-Analysis-system/stubs/camera_movement_stub.pkl"
