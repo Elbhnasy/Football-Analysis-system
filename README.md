@@ -102,13 +102,13 @@ tracks = tracker.get_object_tracks(frames, read_from_stub=True, stub_path='path/
 ![download](https://github.com/user-attachments/assets/fdaafa66-c490-4a62-8a23-ddf557a40054)
 ![download (3)](https://github.com/user-attachments/assets/739f2571-3661-4000-948c-94ef8e247923)
 ![download (5)](https://github.com/user-attachments/assets/92ab68fd-c8e7-47ed-91be-b6a7f485d9c5)
-![download (4)](https://github.com/user-attachments/assets/e3a9ebcf-ce21-45fd-ac39-f991c5e8113c)
 
 
 
+https://github.com/user-attachments/assets/d2713f7e-e1ff-46c1-b233-f042b52a1a3d
 
 
-https://github.com/user-attachments/assets/58f97e88-1bdd-40bd-9b8a-71302a1ab3c5
+
 
 ## Contributing
 
