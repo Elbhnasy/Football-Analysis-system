@@ -132,10 +132,10 @@ We welcome contributions to improve the **Football Analysis System**. If you'd l
 
 ## Credits
 
-- **[Roboflow](https://roboflow.com/)**: For providing the tools to annotate and export the dataset used in this project.
+- **[Roboflow](https://roboflow.com/)**: To provide the tools to annotate and export the dataset used in this project.
 - **[YOLO v5](https://github.com/ultralytics/yolov5)**: For the object detection framework that powers the tracking and detection features in this system.
 
 ## Contat
 
-For any questions or suggestions, please feel free to open an issue in this repository or contact us directly at **khaledtelbahnasy@gmail.com**.
+Please open an issue in this repository or contact me directly at **khaledtelbahnasy@gmail.com**.
 
